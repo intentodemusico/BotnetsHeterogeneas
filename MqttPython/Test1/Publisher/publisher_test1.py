@@ -3,7 +3,7 @@ import random
 
 broker="iot.eclipse.org"
 port=1883
-
+target=input("Target: ") #attack direction
 #create function for callback
 def on_publish(client,userdata,result): 
     print("data published \n")
@@ -19,5 +19,5 @@ client1.on_publish = on_publish
 client1.connect(broker,port)
 
 #publish
-ret= client1.publish("pot/temperatura",random.randint(10, 40))
+ret= client1.publish("botnet/target",target)
 print(ret)
