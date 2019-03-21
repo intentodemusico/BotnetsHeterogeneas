@@ -1,9 +1,13 @@
 import time
 
 #Calculating 50000 pi decimals
-def make_pi():
+def make_pi(ndecimals):
     q, r, t, k, m, x = 1, 0, 1, 1, 3, 3
-    for j in range(50000):
+    #It's considered 10000 as the lowest decimals cuantity to measure
+    #the processing capacity
+    if(ndecimals<10000):
+        ndecimals=50000
+    for j in range(ndecimals):
         if 4 * q + r - t < m * t:
             yield m
             q, r, t, k, m, x = 10*q, 10*(r-m*t), t, k, (10*(3*q+r))//t - 10*m, x
@@ -25,10 +29,10 @@ def make_pi():
 #If you want to print the result, just use the code over this line and under
 #the function definition
 
-def calculateProcessingTime():
+def calculateProcessingTime(ndecimals1):
     #Measuring time
     start = time.time()
-    for i in make_pi():
+    for i in make_pi(ndecimals1):
         pass
 
     #Total time
