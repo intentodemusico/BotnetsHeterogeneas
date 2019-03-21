@@ -2,10 +2,10 @@ import time
 #Measuring time
 start = time.time()
 
-#Calculating 1000 pi decimals
+#Calculating 50000 pi decimals
 def make_pi():
     q, r, t, k, m, x = 1, 0, 1, 1, 3, 3
-    for j in range(1000):
+    for j in range(50000):
         if 4 * q + r - t < m * t:
             yield m
             q, r, t, k, m, x = 10*q, 10*(r-m*t), t, k, (10*(3*q+r))//t - 10*m, x
@@ -26,7 +26,6 @@ def make_pi():
 
 #If you want to print the result, just use the code over this line and under
 #the start time measuring
-
 for i in make_pi():
     pass
 
