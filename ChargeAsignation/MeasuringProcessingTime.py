@@ -1,6 +1,4 @@
 import time
-#Measuring time
-start = time.time()
 
 #Calculating 50000 pi decimals
 def make_pi():
@@ -25,11 +23,16 @@ def make_pi():
 #######################################################
 
 #If you want to print the result, just use the code over this line and under
-#the start time measuring
-for i in make_pi():
-    pass
+#the function definition
 
-#Total time
-end = time.time()
-totalTime=end - start
-print(totalTime)
+def calculateProcessingTime():
+    #Measuring time
+    start = time.time()
+    for i in make_pi():
+        pass
+
+    #Total time
+    end = time.time()
+    totalTime=end - start
+    #print(totalTime)
+    return totalTime
