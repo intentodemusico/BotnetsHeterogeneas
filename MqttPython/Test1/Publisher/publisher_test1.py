@@ -10,7 +10,7 @@ def on_publish(client,userdata,result):
     pass
 
 #create client object
-client1= paho.Client("potcontroller")
+client1= paho.Client("botnetcontroller")
 
 #assign function to callback
 client1.on_publish = on_publish
