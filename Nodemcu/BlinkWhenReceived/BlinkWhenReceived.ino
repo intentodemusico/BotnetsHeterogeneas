@@ -5,7 +5,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <Wire.h>
-#include <Adafruit_INA219.h>
+//#include <Adafruit_INA219.h>
 
 //Angarita
 // Connect to the WiFi
