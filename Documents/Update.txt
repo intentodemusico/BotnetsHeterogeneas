@@ -9,3 +9,6 @@ INTERESA:
 El pc es el nodo raíz 
 Ataquewtf --> cómo atacar una dirección por requests?
 en la pre:cualquier nodo se desconecta y sigue tabajando
+
+
+LOS ID SE SOLAPAN CUANDO SE EJECUTAN DOS CLIENTES EN EL MISMO CICLO
