@@ -28,7 +28,7 @@ client1.connect(broker,port)
 
 startTime=time.time()
 while(nodeId==-1):
-    if(int((time.time()-startTime)%60%14)==0):
+    if(int((time.time()-startTime)%60%9)==0):
         time.sleep(1)
         ret= client1.publish("botnet/heartbeatId",heartbeat)
         print(ret)
