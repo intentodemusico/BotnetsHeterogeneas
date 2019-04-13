@@ -6,7 +6,7 @@ global received
 global nodeId
 global lastId
 received=-1
-
+lastId=-555
 nodeId=-1
 
 heartbeat="Node "+str(nodeId)+" alive"
@@ -15,7 +15,8 @@ heartbeat="Node "+str(nodeId)+" alive"
 def setNodeId(newLastId):
     global nodeId
     nodeId=newLastId
-    ret= client.publish("botnet/lastId",newLastId)
+    print("Node id:",newLastId)
+    ret= client.publish("botnet/lastId",nodeId)
     
 def on_publish(client,userdata,result): 
     print("data published \n")
@@ -29,7 +30,7 @@ def on_connect(client, userdata, flags, rc):
     #client.subscribe("$SYS/#")
     client.subscribe("botnet/target")
     client.subscribe("botnet/heartbeatId")
-    cliente.subscribe("botnet/lastId")
+    client.subscribe("botnet/lastId")
     
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -38,8 +39,10 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     print(" ")
     received=1
-    if(msg.topic="botnet/lastId"):
+    if(msg.topic=="botnet/lastId" and lastId!=int(msg.payload)):
         lastId=int(msg.payload)
+        print("New last id:",lastId)
+        
     
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -57,23 +60,28 @@ client.connect(broker,port)
 startTime=time.time()
 while(True):
     client.loop(.1)
+    #print("Mi id",nodeId)
     if(int((time.time()-startTime)%60%14)==0):
         time.sleep(1)## 15 seconds elapsed
         #print("15 seconds elapsed")
+        if(nodeId==-1 and received==1):   
+            setNodeId(lastId+1)
         if(received==0):
             print("No alive nodes, i'll be the master one")
-            client.loop_stop()
+            #client.loop_stop()
             break
         else:
             received=0
-            if(nodeId==-1):
-                setNodeId(lastId+1)
+
                 
-if(nodeId==1):
-    nodeId=0
+if(nodeId==-1):
+    lastId=nodeId=0
     startTime=time.time()
     while(nodeId==0):
-        if(int((time.time()-startTime)%60%9)==0):
+        client.loop(.1)
+        if(int((time.time()-startTime)%60%10)==0):
             time.sleep(1)
-            ret= client.publish("botnet/heartbeatId",heartbeat)
+            #ret= client.publish("botnet/heartbeatId",heartbeat)
+            ret= client.publish("botnet/lastId",lastId)
+            print("Last id:",lastId)
             print(ret)
