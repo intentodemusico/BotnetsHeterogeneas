@@ -1,6 +1,4 @@
 Asignación de cargas
-Comienzo: todos los nodos son padres  --> 
-conexión 
 
 kali:
 	pull -> bajar el repositorio y compilar, para correr la herramienta
@@ -8,12 +6,6 @@ kali:
 	sudo apt-get install asodjadsad ---> pa' después
 	
 INTERESA:
-//Cómo conectar mediante python todos los nodos?
 El pc es el nodo raíz 
-Cómo distribuir raíces?
-Cómo redistribuir el publisher?
 Ataquewtf --> cómo atacar una dirección por requests?
-
-Broker tiene heartbeat
-
 en la pre:cualquier nodo se desconecta y sigue tabajando
