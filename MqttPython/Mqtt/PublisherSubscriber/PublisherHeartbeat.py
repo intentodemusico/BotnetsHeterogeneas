@@ -13,13 +13,13 @@ def on_publish(client,userdata,result):
     pass
 
 #create client object
-client1= paho.Client("botnetcontroller")
+client= paho.Client("botnetcontroller")
 
 #assign function to callback
-client1.on_publish = on_publish
+client.on_publish = on_publish
 
 #establish connection
-client1.connect(broker,port)
+client.connect(broker,port)
 
 #publish
 
@@ -32,6 +32,3 @@ while(nodeId==-1):
         time.sleep(1)
         ret= client1.publish("botnet/heartbeatId",heartbeat)
         print(ret)
-        print("15 seconds elapsed")
-        
-        

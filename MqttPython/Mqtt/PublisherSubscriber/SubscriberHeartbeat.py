@@ -35,7 +35,7 @@ client.connect(broker,port)
 
 #Runs until it receives a message
 
-#client.loop_start()
+
 startTime=time.time()
 while(True):
     client.loop(.1)
