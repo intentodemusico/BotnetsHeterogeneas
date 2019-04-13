@@ -1,8 +1,16 @@
+#include <PubSubClient.h>
 #include <ESP8266WiFi.h> 
- 
+
 const char* ssid = "system"; // Rellena con el nombre de tu red WiFi
 const char* password = "1nformatica"; // Rellena con la contraseña de tu red WiFi
- 
+
+const char *mqtt_server = "iot.eclipse.org";
+const int port=1883;
+const char *device_id = "esp8266";
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
 //const char* host = "api.wunderground.co";
 //const char* apiKey = "tu clave API de wunderground.com"; // Puedes obtenerla en
 //                                         // https://www.wunderground.com/weather/api/
@@ -10,6 +18,7 @@ const char* password = "1nformatica"; // Rellena con la contraseña de tu red Wi
 //// Huella digital del certificado del servidor https://www.wunderground.com
 //const char * fingerprint = "a9 1f b9 fe 35 b8 38 b9 54 67 e7 34 52 8a 24 d4 17 29 fa 32";
 // 
+
 void setup() {
   Serial.begin(115200);
   delay(10);
@@ -36,6 +45,8 @@ void setup() {
   Serial.println("WiFi connected"); 
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP()); // Mostramos la IP
+  
+  client.setServer(mqtt_server, port); 
 }
  
 void loop() {
@@ -102,4 +113,17 @@ void loop() {
 //              // procesos de la conexión WiFi. Si no se hace el ESP8266
 //              // generará un error y se reiniciará a los pocos segundos
 //   }
+}
+
+static void reconnect()
+{ 
+  while (!client.connected())
+  {
+    Serial.print("Attempting MQTT connection..."); 
+    if (client.connect(device_id, "CLOUD USER NAME", "CLOUD PASSWORD"))
+    { 
+      Serial.println("connected"); 
+      client.subscribe("esp8266/led_control"); 
+    }
+  }
 }
