@@ -11,4 +11,8 @@ Ataquewtf --> cómo atacar una dirección por requests?
 en la pre:cualquier nodo se desconecta y sigue tabajando
 
 
-LOS ID SE SOLAPAN CUANDO SE EJECUTAN DOS CLIENTES EN EL MISMO CICLO
+					LOS ID SE SOLAPAN CUANDO SE EJECUTAN DOS CLIENTES EN EL MISMO CICLO
+
+
+
+				AL MORIR UN PUBLISHER, TODOS LOS DEMÁS PASAN A SER PUBLISHER, PUES NO SE CONTROLA EL ID
