@@ -6,6 +6,7 @@ port=1883
 target=input("Target: ") #attack direction
 #create function for callback
 nodeId=-1
+
 heartbeat="Node",nodeId,"alive"
 def on_publish(client,userdata,result): 
     print("data published \n")

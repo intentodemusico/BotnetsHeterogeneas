@@ -1,7 +1,8 @@
 import paho.mqtt.client as mqtt
 broker = "iot.eclipse.org"
 port = 1883
-
+global received
+received=0
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -16,6 +17,10 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     print(msg)
+    global received
+    received=1
+    print("Received:",received)
+    
     
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -26,4 +31,8 @@ client.connect(broker,port)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-client.loop_forever()
+
+client.loop_start()
+while(received==0):
+    pass
+client.loop_stop()
