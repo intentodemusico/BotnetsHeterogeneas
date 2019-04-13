@@ -35,14 +35,16 @@ client.connect(broker,port)
 
 #Runs until it receives a message
 
-client.loop_start()
+#client.loop_start()
+startTime=time.time()
 while(True):
-    if(received==0):
-        client.loop_stop()
-        print("Vemos, no hay nadie vivo")
-        break
-    else:
-        received=0
-        client.loop(15)
-        time.sleep(15)
-        print("Pasaron 15 segundos")
+    client.loop(.1)
+    if(int((time.time()-startTime)%60%14)==0):
+        time.sleep(1)## 15 seconds elapsed
+        print("15 seconds elapsed")
+        if(received==0):
+            print("Vemos, no hay nadie vivo")
+            client.loop_stop()
+            break
+        else:
+            received=0
