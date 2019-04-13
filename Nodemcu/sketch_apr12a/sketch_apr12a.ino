@@ -1,15 +1,21 @@
 //code write by Moz for YouTube changel logMaker360, 24-11-2016
 //code belongs to this video: https://youtu.be/nAUUdbUkJEI
 
-#include <EEPROM.h>
+//#include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <Wire.h>
 #include <Adafruit_INA219.h>
- 
+
+//Angarita
 // Connect to the WiFi
-const char* ssid = "TBGA-523188";                           //!!!!!!!!!!!!!!!!!!!!!
-const char* password = "T1098799484";                //!!!!!!!!!!!!!!!!!!!!!
+//const char* ssid = "TBGA-523188";                           //!!!!!!!!!!!!!!!!!!!!!
+//const char* password = "T1098799484";                //!!!!!!!!!!!!!!!!!!!!!
+
+//Alberto
+const char* ssid = "system"; // Rellena con el nombre de tu red WiFi
+const char* password = "1nformatica"; // Rellena con la contraseña de tu red WiFi
+ 
 const char* mqtt_server = "iot.eclipse.org";                 //!!!!!!!!!!!!!!!!!!!!!
  
 WiFiClient espClient;
