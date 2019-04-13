@@ -41,7 +41,7 @@ def on_message(client, userdata, msg):
     received=1
     if(msg.topic=="botnet/lastId" and lastId!=int(msg.payload)):
         lastId=int(msg.payload)
-        print("New last id:",lastId)
+        print("New local last id:",lastId)
         
     
 client = mqtt.Client()
@@ -75,13 +75,14 @@ while(True):
 
                 
 if(nodeId==-1):
-    lastId=nodeId=0
-    startTime=time.time()
-    while(nodeId==0):
-        client.loop(.1)
-        if(int((time.time()-startTime)%60%10)==0):
-            time.sleep(1)
-            #ret= client.publish("botnet/heartbeatId",heartbeat)
-            ret= client.publish("botnet/lastId",lastId)
-            print("Last id:",lastId)
-            print(ret)
+    lastId=0
+nodeId=0
+startTime=time.time()
+while(nodeId==0):
+    client.loop(.1)
+    if(int((time.time()-startTime)%60%10)==0):
+        time.sleep(1)
+        #ret= client.publish("botnet/heartbeatId",heartbeat)
+        ret= client.publish("botnet/lastId",lastId)
+        print("Last id:",lastId)
+        print(ret)
