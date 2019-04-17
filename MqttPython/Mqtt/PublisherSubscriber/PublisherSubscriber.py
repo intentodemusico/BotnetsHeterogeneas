@@ -87,6 +87,7 @@ while(True):
             break
         else:
             nodeId-=1
+            lastId-=1
             restas+=1
             print("NodeId--",nodeId,"restas",restas)
         received=0
@@ -97,7 +98,7 @@ if(nodeId<=-1):
     lastId=0
 else:
     restas+=1
-    lastId-=restas
+    lastId-=1
 nodeId=0
 startTime=time.time()
 
