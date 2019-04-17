@@ -91,7 +91,9 @@ while(True):
             restas+=1
             print("NodeId--",nodeId,"restas",restas)
         received=0
-
+        #Control de errores?
+        if(nodeId>lastId):
+            nodeId-=1#?
 
 #Node take leadership of the botnet                
 if(nodeId<=-1):
