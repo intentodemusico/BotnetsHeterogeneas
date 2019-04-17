@@ -63,7 +63,7 @@ startTime=time.time()
 while(True):
     client.loop(.1)
     #print("Mi id",nodeId)
-    if(int((time.time()-startTime)%60%14)==0):
+    if(int((time.time()-startTime)%60%16)==0):
         time.sleep(1)## 15 seconds elapsed
         #print("15 seconds elapsed")
 
