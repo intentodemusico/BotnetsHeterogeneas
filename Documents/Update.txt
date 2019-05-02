@@ -1,13 +1,8 @@
-Asignación de cargas
+Asignaciï¿½n de cargas
 
-kali:
-	pull -> bajar el repositorio y compilar, para correr la herramienta
-	.py 
-	sudo apt-get install asodjadsad ---> pa' después
-	
 INTERESA:
-El pc es el nodo raíz 
-Ataquewtf --> cómo atacar una dirección por requests?
+El pc es el nodo raï¿½z 
+Ataquewtf --> cï¿½mo atacar una direcciï¿½n por requests?
 en la pre:cualquier nodo se desconecta y sigue tabajando
 
 
@@ -15,4 +10,4 @@ en la pre:cualquier nodo se desconecta y sigue tabajando
 
 
 
-				AL MORIR UN PUBLISHER, TODOS LOS DEMÁS PASAN A SER PUBLISHER, PUES NO SE CONTROLA EL ID
+				AL MORIR UN PUBLISHER, TODOS LOS DEMï¿½S PASAN A SER PUBLISHER, PUES NO SE CONTROLA EL ID
