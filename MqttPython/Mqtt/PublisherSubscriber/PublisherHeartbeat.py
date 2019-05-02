@@ -30,5 +30,5 @@ startTime=time.time()
 while(nodeId==-1):
     if(int((time.time()-startTime)%60%9)==0):
         time.sleep(1)
-        ret= client1.publish("botnet/heartbeatId",heartbeat)
+        ret= client.publish("botnet/heartbeatId",heartbeat)
         print(ret)
