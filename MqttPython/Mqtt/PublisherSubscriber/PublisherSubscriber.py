@@ -11,25 +11,27 @@ nodeId=-1
 
 heartbeat="Node "+str(nodeId)+" alive"
 
-##def slave():
-##    sub a heartbeat
-##    check cada 4 secs if !received id-- -> master()
-##def master():
-##    sub a target
-##    sub a id
-##    publish cada 2 -> ip id 
-##def regular():
-##    sub a heart
-##    pub de id
-##    while atacking revisa cada minuto x interrupción
+def slave():
+    sub a heartbeat
+    check cada 4 secs if !received id-- -> master()
+def master():
+    sub a target
+    sub a id
+    publish cada 2 -> ip id 
+def regular():
+    def setNodeId(newLastId):
+        global nodeId
+        nodeId=newLastId
+        print("Node id:",newLastId)
+        ret= client.publish("botnet/lastId",nodeId)
+    
+    sub a heart
+    pub de id
+    while atacking revisa cada minuto x interrupción
 
     
 #Establishing new last id and setting it to node
-def setNodeId(newLastId):
-    global nodeId
-    nodeId=newLastId
-    print("Node id:",newLastId)
-    ret= client.publish("botnet/lastId",nodeId)
+
     
 def on_publish(client,userdata,result): 
     print("data published \n")
@@ -77,6 +79,7 @@ while(True):
     if(int((time.time()-startTime)%60%14)==0):
         time.sleep(1)## 15 seconds elapsed
         #print("15 seconds elapsed")
+        startTime=time.time()
         if(nodeId==-1 and received==1):   
             setNodeId(lastId+1)
         if(received==0):
@@ -93,9 +96,9 @@ nodeId=0
 startTime=time.time()
 while(nodeId==0):
     client.loop(.1)
-    if(int((time.time()-startTime)%60%10)==0):
-        time.sleep(1)
-        #ret= client.publish("botnet/heartbeatId",heartbeat)
+    if(int((time.time()-startTime)%60%2)==0):
+        startTime=time.time()
+        ret= client.publish("botnet/heartbeatId",heartbeat)
         ret= client.publish("botnet/lastId",lastId)
         print("Last id:",lastId)
         print(ret)
