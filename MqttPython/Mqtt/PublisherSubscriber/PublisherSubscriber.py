@@ -11,6 +11,19 @@ nodeId=-1
 
 heartbeat="Node "+str(nodeId)+" alive"
 
+##def slave():
+##    sub a heartbeat
+##    check cada 4 secs if !received id-- -> master()
+##def master():
+##    sub a target
+##    sub a id
+##    publish cada 2 -> ip id 
+##def regular():
+##    sub a heart
+##    pub de id
+##    while atacking revisa cada minuto x interrupción
+
+    
 #Establishing new last id and setting it to node
 def setNodeId(newLastId):
     global nodeId
