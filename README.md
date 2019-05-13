@@ -14,7 +14,11 @@
 
 &nbsp;1. Fix Arduino wifi connection bug: arduino developer -> **Maximum priority**
 
-&nbsp;2. Fix Arduino Master-slave bug Python: python skilled developer -> **Maximum priority**
+&nbsp;2. Fix Arduino mqtt code: arduino skilled developer -> **Maximum priority**
+
+&nbsp;3. Fix Arduino botnet rules: arduino skilled developer & networking/cluster architecture skilled engineer-> **Maximum priority**
+
+-Master-slave bug Python: python skilled developer -> **Maximum priority**
 
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
 
