@@ -3,20 +3,26 @@
 ## We are two students of UPB Bucaramanga university in Colombia wanting to improve the internet security.
 -
 ### Needed knowledge
+```
 - Mqtt on python or/and Arduino
 - Networking and telematics science
 - Cluster architecture
+```
 ### To-Do list
+```
 -Fix Arduino implementation: arduino skilled developer -> High priority
+.
   1. Fix Arduino wifi connection bug: arduino developer -> Maximum priority
+  .
   2. Fix Arduino 
+  .
 -Master-slave bug Python: python skilled developer -> Maximum priority
+.
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
+.
+```
 #
 <!--
-You can use the [editor on GitHub](https://github.com/intentodemusico/BotnetsHeterogeneas/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-.
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 .
 ### Markdown 
 .
