@@ -16,7 +16,6 @@
 -Master-slave bug Python: python skilled developer -> Maximum priority
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
 ```
-#
 <!--
 .
 ### Markdown 
