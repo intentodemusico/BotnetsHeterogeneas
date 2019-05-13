@@ -1,4 +1,5 @@
-# Botnets
+# BOTNETS
+### We are two students of UPB Bucaramanga College in Colombia.
 <!-- ## Welcome to GitHub Pages--> 
 <!--
 You can use the [editor on GitHub](https://github.com/intentodemusico/BotnetsHeterogeneas/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
