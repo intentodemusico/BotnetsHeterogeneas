@@ -70,6 +70,11 @@ def attack():
         ##get
         print("get")
         r = requests.get(target)
+        #print(r.text)
+        #print(r.headers['content-type'])
+        #print(r.headers)
+        #print(r.status_code)
+        #print(type(r)).
         time.sleep(1)
         if(int((time.time()-startTime)%60)==0):
             client.loop(.1)
