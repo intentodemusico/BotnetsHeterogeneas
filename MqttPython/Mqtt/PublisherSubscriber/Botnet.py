@@ -89,7 +89,7 @@ def master():
     global client
     global nodeId
     global lastId
-
+    print("No alive nodes, i'll be the master one")
 
 
     client.on_connect = on_connectm
@@ -142,8 +142,6 @@ def common():
             if(nodeId==-1 and isReceived()):   
                 setNodeId(lastId+1)
             if(not isReceived()):
-                print("isre",isReceived())
-                print("No alive nodes, i'll be the master one")
                 master()
                 #client.loop_stop()
                 break
@@ -152,8 +150,6 @@ def common():
             if(isSlave()):
                 slave()
     
-
-
 
 client = mqtt.Client()
 common()
