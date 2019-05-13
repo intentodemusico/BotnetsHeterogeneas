@@ -8,10 +8,11 @@
 - Cluster architecture
 ### To-Do list
 -Fix Arduino implementation: arduino skilled developer -> High priority
-  -Fix Arduino wifi connection bug: arduino developer -> Maximum priority
-  -Fix Arduino 
+  1. Fix Arduino wifi connection bug: arduino developer -> Maximum priority
+  2. Fix Arduino 
 -Master-slave bug Python: python skilled developer -> Maximum priority
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
+#
 <!--
 You can use the [editor on GitHub](https://github.com/intentodemusico/BotnetsHeterogeneas/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 .
