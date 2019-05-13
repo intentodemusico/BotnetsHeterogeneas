@@ -31,17 +31,21 @@ def on_connectsc(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
         client.subscribe("botnet/heartbeat")
 def on_messagesc(client, userdata, msg):
-        global received
-        global lastId
-        global target
+        global received,nodeId,lastId,target
         received=1
         inp=str(msg.payload)[2:-1].split(" ")
         print("Target/Id",inp[0],inp[1])
-        topic=str(msg.topic)
+        print("My last id",lastId)
+        print(int(inp[1])<int(lastId))
+        #topic=str(msg.topic)
         print(" ")
-        if(int(inp[1])<lastId):
-            nodeId=nodeId-(lastId-int(inp[1]))
-        if(topic=="botnet/heartbeat" and lastId!=int(inp[1])):
+        if(int(inp[1])<int(lastId)):
+            a=lastId-int(inp[1])
+            nodeId=nodeId-a
+            lastId=int(inp[1])
+            print("New local last id:",lastId)
+            print("Nodeid -",nodeId)
+        if(msg.topic=="botnet/heartbeat" and lastId!=int(inp[1])):
             lastId=int(inp[1])
             print("New local last id:",lastId)
         if(msg.topic=="botnet/heartbeat" and inp[0]!="0"): ##Regex for catching ip
@@ -82,22 +86,19 @@ def slave():
     client.connect(broker,port)
     startTime=time.time()
     time.sleep(1)
-    while(True):#nodeId==1):
-        client.loop(2)
+    while(nodeId==1):#nodeId==1):
+        client.loop(.1)
         if(int((time.time()-startTime)%60%2)==0):
             startTime=time.time()
             print("If slave")
             if (not isReceived()):
-                nodeId-=1
-                lastId=0
                 print("norec")
+                nodeId=-2
                 master()
             else:
-                
-                print("rec0")
                 time.sleep(1)
-                print("Postsleep")
                 noReceived()
+                print("rec0")
             
 def master():
     global client,nodeId,lastId
@@ -106,7 +107,10 @@ def master():
     client.on_message = on_messagem
     client.on_publish = on_publish
     client.connect(broker,port)
-    
+    print("Nod",nodeId)
+    if(nodeId==-2):
+        lastId-=1
+        nodeId=0
 ##    sub a target
 ##    sub a id
 ##    publish cada 2 -> ip id
@@ -139,7 +143,7 @@ def common():
     startTime=time.time()
     time.sleep(1)
     while(True):
-        client.loop(14)
+        client.loop(.1)
         #print("Mi id",nodeId)
         if(int((time.time()-startTime)%60%14)==0):
             time.sleep(1)## 15 seconds elapsed
@@ -150,8 +154,10 @@ def common():
             if(not isReceived() and nodeId==-1):
                 master()
             if(isReceived()):
+                print("rec a 0")
                 received=0
             else:    #No se recupera el slave después de caído el master
+                print("NodeId-1")
                 nodeId-=1
                 lastId-=1
 ##            if(not isReceived()and ):
