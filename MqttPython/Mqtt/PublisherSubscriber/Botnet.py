@@ -147,7 +147,7 @@ def common():
             if(isSlave()):
                 slave()
     
-
+ 
 client = mqtt.Client()
 common()
 
