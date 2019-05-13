@@ -118,8 +118,6 @@ def common():
         nodeId=newLastId
         print("Node id:",newLastId)
         ret= client.publish("botnet/lastId",nodeId)
-
-    
     client.on_connect = on_connectsc
     client.on_message = on_messagesc
     client.on_publish = on_publish
