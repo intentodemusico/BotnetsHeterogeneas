@@ -1,7 +1,10 @@
+<!-- ## Welcome to GitHub Pages--> 
+<!--
 # BOTNETS
-## We are two students of UPB Bucaramanga university in Colombia, wanting to improve the internet security.
-
-#Needed knowledge
+-
+## We are two students of UPB Bucaramanga university in Colombia wanting to improve the internet security.
+-
+###Needed knowledge
 -
 -Mqtt on python or/and Arduino
 -
@@ -9,7 +12,7 @@
 -
 -Cluster architecture
 -
-#To-Do list
+###To-Do list
 -
 -Fix Arduino implementation: arduino skilled developer -> High priority
 -
@@ -21,8 +24,6 @@
 -
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
 -
-<!-- ## Welcome to GitHub Pages--> 
-<!--
 You can use the [editor on GitHub](https://github.com/intentodemusico/BotnetsHeterogeneas/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 .
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
