@@ -1,5 +1,12 @@
 # BOTNETS
-### We are two students of UPB Bucaramanga College in Colombia.
+## We are two students of UPB Bucaramanga university in Colombia, wanting to improve the internet security.
+
+##Needed knowledge
+#To-Do list
+- Fix Arduino implementation: arduino skilled developer -> High priority
+  -Fix Arduino wifi connection bug: arduino developer -> Maximum priority
+- Master-slave bug Python: python skilled developer -> Maximum priority
+- Android/IOs implementation: Android/IOs skilled developer -> Medium priority
 <!-- ## Welcome to GitHub Pages--> 
 <!--
 You can use the [editor on GitHub](https://github.com/intentodemusico/BotnetsHeterogeneas/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
