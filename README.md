@@ -11,7 +11,7 @@
 
 ### To-Do list
 -Fix Arduino implementation: arduino skilled developer -> High priority
--
+
 &nbsp;1. Fix Arduino wifi connection bug: arduino developer -> **Maximum priority**
 &nbsp;2. Fix Arduino Master-slave bug Python: python skilled developer -> **Maximum priority**
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
