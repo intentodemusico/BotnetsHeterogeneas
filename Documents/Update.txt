@@ -1,13 +1,20 @@
-Asignaci�n de cargas
+--------Asignaci�n de cargas-------
+Master and slave
+Master: always sending id and ip in a single message
+Slave: checks master's answering --- 
+Functions for every kind of node
 
+-----------------------------------------------------
+kali:
+	pull -> bajar el repositorio y compilar, para correr la herramienta
+	.py 
+	sudo apt-get install asodjadsad ---> pa' despu�s
+
+---------------------------------------------------------
+	
 INTERESA:
 El pc es el nodo ra�z 
-Ataquewtf --> c�mo atacar una direcci�n por requests?
 en la pre:cualquier nodo se desconecta y sigue tabajando
 
 
 					LOS ID SE SOLAPAN CUANDO SE EJECUTAN DOS CLIENTES EN EL MISMO CICLO
-
-
-
-				AL MORIR UN PUBLISHER, TODOS LOS DEM�S PASAN A SER PUBLISHER, PUES NO SE CONTROLA EL ID

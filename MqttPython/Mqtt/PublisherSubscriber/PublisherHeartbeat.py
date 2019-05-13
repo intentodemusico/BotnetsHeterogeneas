@@ -5,9 +5,10 @@ broker="iot.eclipse.org"
 port=1883
 #target=input("Target: ") #attack direction
 #create function for callback
-nodeId=-1
-
-heartbeat="Node "+str(nodeId)+" alive"
+nodeId=-200
+target="127.0.0.1:8000"
+lastId=3
+heartbeat=str(target)+" "+str(lastId)
 def on_publish(client,userdata,result): 
     print("data published \n")
     pass
@@ -26,9 +27,5 @@ client.connect(broker,port)
 #ret= client1.publish("botnet/target",target)
 #print(ret)
 
-startTime=time.time()
-while(nodeId==-1):
-    if(int((time.time()-startTime)%60%9)==0):
-        time.sleep(1)
-        ret= client.publish("botnet/heartbeatId",heartbeat)
-        print(ret)
+ret= client.publish("botnet/heartbeat",heartbeat)
+print(ret)

