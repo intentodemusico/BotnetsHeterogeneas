@@ -11,10 +11,5 @@ kali:
 	sudo apt-get install asodjadsad ---> pa' después
 
 ---------------------------------------------------------
-	
-INTERESA:
-El pc es el nodo raíz 
-en la pre:cualquier nodo se desconecta y sigue tabajando
-
 
 					LOS ID SE SOLAPAN CUANDO SE EJECUTAN DOS CLIENTES EN EL MISMO CICLO
