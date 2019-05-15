@@ -17,6 +17,7 @@
 - Mqtt on python or/and Arduino developer
 - Networking and telematics expert
 - Cluster architecture expert
+- Electronics expert
 ```
 
 ### To-Do list
@@ -32,7 +33,7 @@
 
 -Android/IOs implementation: Android/IOs skilled developer -> Medium priority
 
--Charge asignation: python/arduino skilled developer -> High priority
+-Charge asignation: python/arduino skilled developer, electronics expert -> High priority
 
 -Project into native linux repositories: ? -> Low priority
 
