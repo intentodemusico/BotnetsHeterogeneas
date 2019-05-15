@@ -17,6 +17,7 @@
 - Mqtt on python or/and Arduino developer
 - Networking and telematics expert
 - Cluster architecture expert
+- Electronics expert
 ```
 
 ### To-Do list
