@@ -1,12 +1,16 @@
 <!-- ## Welcome to GitHub Pages--> 
-# BOTNETS - GNU/GPLv3
+# UPBotnet - GNU/GPLv3
+
 ## We are two students of UPB Bucaramanga university in Colombia wanting to improve the internet security with our high availability botnet.
 
-## Working
+
+## How it works?
+
 ##### There's three kind of node: common, master and slave
 ##### Every node starts as a common node. If there's no master one, common node will be the master. 
 ##### If a node starts and master is alive, but there's no slave; common node will be the slave.
 ##### If a node starts after master and slave are setted up, common will still common until the nodes queue makes it slave or master.
+
 
 ##### If master dies, slave will replace it, and next common node in queue will be set up as slave.
 ##### If slave dies, nobody will take it's place.
