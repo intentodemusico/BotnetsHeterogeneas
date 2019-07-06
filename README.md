@@ -29,7 +29,10 @@
 &nbsp;     2. Fix Arduino mqtt code: arduino skilled developer -> **Maximum priority**
 
 &nbsp;     3. Fix Arduino botnet rules: arduino skilled developer & networking/cluster architecture skilled engineer-> **Maximum priority**
+
 &nbsp;     4. Check license choice for change it by a better one -> **High priority**
+
+&nbsp;     5. Change repository name acording to project name -> **Medium priority**
 
 -Master-slave (two slave at the same time) bug Python: python skilled developer, cluster architecture expert -> **Maximum priority**
 
